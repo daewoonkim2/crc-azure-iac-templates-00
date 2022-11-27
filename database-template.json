@@ -1,0 +1,90 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "databaseAccounts_crc_azure_cosmosdb_01_name": {
+            "defaultValue": "crc-azure-cosmosdb-01",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2022-08-15",
+            "name": "[parameters('databaseAccounts_crc_azure_cosmosdb_01_name')]",
+            "location": "East US",
+            "tags": {
+                "defaultExperience": "Azure Table",
+                "crc-azure-cosmosdb-key-01": "crc-azure-cdn-0crc-azure-cosmosdb-value-01",
+                "hidden-cosmos-mmspecial": ""
+            },
+            "kind": "GlobalDocumentDB",
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "publicNetworkAccess": "Enabled",
+                "enableAutomaticFailover": false,
+                "enableMultipleWriteLocations": false,
+                "isVirtualNetworkFilterEnabled": false,
+                "virtualNetworkRules": [],
+                "disableKeyBasedMetadataWriteAccess": false,
+                "enableFreeTier": false,
+                "enableAnalyticalStorage": false,
+                "analyticalStorageConfiguration": {
+                    "schemaType": "WellDefined"
+                },
+                "databaseAccountOfferType": "Standard",
+                "defaultIdentity": "FirstPartyIdentity",
+                "networkAclBypass": "None",
+                "disableLocalAuth": false,
+                "enablePartitionMerge": false,
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "BoundedStaleness",
+                    "maxIntervalInSeconds": 86400,
+                    "maxStalenessPrefix": 1000000
+                },
+                "locations": [
+                    {
+                        "locationName": "East US",
+                        "provisioningState": "Succeeded",
+                        "failoverPriority": 0,
+                        "isZoneRedundant": false
+                    }
+                ],
+                "cors": [],
+                "capabilities": [
+                    {
+                        "name": "EnableTable"
+                    },
+                    {
+                        "name": "EnableServerless"
+                    }
+                ],
+                "ipRules": [],
+                "backupPolicy": {
+                    "type": "Continuous"
+                },
+                "networkAclBypassResourceIds": [],
+                "capacity": {
+                    "totalThroughputLimit": 4000
+                },
+                "keysMetadata": {}
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/tables",
+            "apiVersion": "2022-08-15",
+            "name": "[concat(parameters('databaseAccounts_crc_azure_cosmosdb_01_name'), '/crc-azure-cosmosdb-table-01')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_crc_azure_cosmosdb_01_name'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "crc-azure-cosmosdb-table-01"
+                }
+            }
+        }
+    ]
+}
