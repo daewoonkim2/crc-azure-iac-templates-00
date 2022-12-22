@@ -4,7 +4,7 @@
     "parameters": {
         "databaseAccounts_crc_azure_cosmosdb_01_name": {
             "defaultValue": "crc-azure-cosmosdb-01",
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {},
